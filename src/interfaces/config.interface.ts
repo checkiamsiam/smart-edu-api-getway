@@ -6,6 +6,8 @@ interface IConfig {
     secret: string;
     refreshSecret: string;
   };
+  authServiceUrl: string | undefined;
+  coreServiceUrl: string | undefined;
 }
 
 export default IConfig;
