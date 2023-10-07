@@ -1,18 +1,40 @@
 import dotenv from "dotenv";
-import IConfig from "../interfaces/config.interface";
+import path from "path";
+import { z } from "zod";
 
-dotenv.config();
+dotenv.config({ path: path.join(process.cwd(), ".env") });
 
-const config: IConfig = {
-  isDevelopment: process.env.NODE_ENV === "development",
-  port: process.env.PORT || 5002,
-  redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+const envVarsZodSchema = z.object({
+  NODE_ENV: z.string(),
+  PORT: z
+    .string()
+    .default("5000")
+    .refine((val) => Number(val)),
+  JWT_SECRET: z.string(),
+  REDIS_URL: z.string(),
+  AUTH_SERVICE_URL: z.string(),
+  CORE_SERVICE_URL: z.string(),
+  // CLOUDINARY_CLOUD_NAME: z.string(),
+  // CLOUDINARY_API_KEY: z.string(),
+  // CLOUDINARY_API_SECRET: z.string()
+});
+
+const envVars = envVarsZodSchema.parse(process.env);
+
+export default {
+  env: envVars.NODE_ENV || "development",
+  port: envVars.PORT || 5000,
   jwt: {
-    secret: process.env.JWT_SECRET || "secret",
-    refreshSecret: process.env.JWT_REFRESH_SECRET || "refreshSecret",
+    secret: envVars.JWT_SECRET,
   },
-  authServiceUrl: process.env.AUTH_SERVICE_URL,
-  coreServiceUrl: process.env.CORE_SERVICE_URL,
+  redis: {
+    url: envVars.REDIS_URL,
+  },
+  authServiceUrl: envVars.AUTH_SERVICE_URL,
+  coreServiceUrl: envVars.CORE_SERVICE_URL,
+  // cloudinary: {
+  //   cloudName: envVars.CLOUDINARY_CLOUD_NAME,
+  //   apiKey: envVars.CLOUDINARY_API_KEY,
+  //   apiSecret: envVars.CLOUDINARY_API_SECRET
+  // }
 };
-
-export default config;

@@ -1,49 +1,38 @@
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import express, { Application } from "express";
-import helmet from "helmet";
-import hpp from "hpp";
+import httpStatus from "http-status";
 import morgan from "morgan";
+import globalExceptionHandler from "./app/middlewares/globalExceptionHandler";
+import routes from "./app/routes";
 import config from "./config";
-import globalErrorHandler from "./middleware/globalErrorHandler.middleware";
-import routes from "./routes";
-import sendResponse from "./utils/sendResponse.util";
+
 const app: Application = express();
 
-//global app middleware
-app.use(helmet());
 app.use(cors());
-app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(hpp());
+app.use(cookieParser());
 
-//development middleware
-if (config.isDevelopment) {
+if (config.env === "development") {
   app.use(morgan("dev"));
 }
-//routes
+
 app.use("/api/v1", routes);
 
-// root
-app.get("/", (req, res) => {
-  sendResponse(res, {
-    statusCode: 200,
-    success: true,
-    message: "Welcome to smart edu server",
-  });
-});
+app.use(globalExceptionHandler);
 
-// Not found catch
-app.all("*", (req, res) => {
-  sendResponse(res, {
-    statusCode: 200,
+app.use((req, res, next) => {
+  res.status(httpStatus.NOT_FOUND).json({
     success: false,
-    message: "Adress not found",
+    message: "API not found",
+    errorMessages: [
+      {
+        path: "",
+        message: "API not found",
+      },
+    ],
   });
 });
-
-// error handling middleware
-app.use(globalErrorHandler);
 
 export default app;
