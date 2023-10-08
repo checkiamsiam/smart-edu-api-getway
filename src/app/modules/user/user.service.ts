@@ -16,7 +16,7 @@ const createStudent = async (req: Request) => {
     req.body.student;
 
   const academicDepartmentResponse = await AuthService.get(
-    `/academic-departments?syncId=${academicDepartment}`
+    `/academic-department?syncId=${academicDepartment}`
   );
 
   if (
@@ -27,7 +27,7 @@ const createStudent = async (req: Request) => {
   }
 
   const academicFacultyResponse = await AuthService.get(
-    `/academic-faculties?syncId=${academicFaculty}`
+    `/academic-faculty?syncId=${academicFaculty}`
   );
 
   if (
@@ -38,7 +38,7 @@ const createStudent = async (req: Request) => {
   }
 
   const academicSemesterResponse = await AuthService.get(
-    `/academic-semesters?syncId=${academicSemester}`
+    `/academic-semester?syncId=${academicSemester}`
   );
 
   if (
@@ -73,7 +73,7 @@ const createFaculty = async (req: Request): Promise<IGenericResponse> => {
   const { academicDepartment, academicFaculty } = req.body.faculty;
 
   const academicDepartmentResponse: IGenericResponse = await AuthService.get(
-    `/academic-departments?syncId=${academicDepartment}`
+    `/academic-department?syncId=${academicDepartment}`
   );
 
   if (
@@ -84,7 +84,7 @@ const createFaculty = async (req: Request): Promise<IGenericResponse> => {
   }
 
   const academicFacultyResponse: IGenericResponse = await AuthService.get(
-    `/academic-faculties?syncId=${academicFaculty}`
+    `/academic-faculty?syncId=${academicFaculty}`
   );
 
   if (
