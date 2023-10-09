@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import httpStatus from "http-status";
 import config from "../../../config";
-import sendResponse from "../../../shared/response";
 import { AuthenticationService } from "./auth.service";
 
 const loginUser = async (req: Request, res: Response, next: NextFunction) => {
@@ -16,12 +14,7 @@ const loginUser = async (req: Request, res: Response, next: NextFunction) => {
     };
 
     res.cookie("refreshToken", result.data.refreshToken, cookieOptions);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "User loged in!",
-      data: others,
-    });
+    res.send(result);
   } catch (error) {
     next(error);
   }
@@ -42,12 +35,7 @@ const refreshToken = async (
     };
 
     res.cookie("refreshToken", result.data.refreshToken, cookieOptions);
-    sendResponse(res, {
-      statusCode: httpStatus.OK,
-      success: true,
-      message: "New Refresh token generated!",
-      data: others,
-    });
+    res.send(result);
   } catch (error) {
     next(error);
   }

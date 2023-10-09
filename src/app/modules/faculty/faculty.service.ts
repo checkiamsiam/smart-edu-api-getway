@@ -3,7 +3,7 @@ import { IGenericResponse } from "../../../interfaces/common";
 import { AuthService, CoreService } from "../../../shared/axios";
 
 const getAllFromDB = async (req: Request): Promise<IGenericResponse> => {
-  const response: IGenericResponse = await CoreService.get("/faculties", {
+  const response: IGenericResponse = await CoreService.get("/faculty", {
     params: req.query,
     headers: {
       Authorization: req.headers.authorization,
@@ -14,7 +14,7 @@ const getAllFromDB = async (req: Request): Promise<IGenericResponse> => {
 
 const getMyCourses = async (req: Request): Promise<IGenericResponse> => {
   const response: IGenericResponse = await CoreService.get(
-    "/faculties/my-courses",
+    "/faculty/my-courses",
     {
       params: req.query,
       headers: {
@@ -27,7 +27,7 @@ const getMyCourses = async (req: Request): Promise<IGenericResponse> => {
 
 const getMyCourseStudents = async (req: Request): Promise<IGenericResponse> => {
   const response: IGenericResponse = await CoreService.get(
-    "/faculties/my-course-students",
+    "/faculty/my-course-students",
     {
       params: req.query,
       headers: {
@@ -40,7 +40,7 @@ const getMyCourseStudents = async (req: Request): Promise<IGenericResponse> => {
 
 const getByIdFromDB = async (req: Request): Promise<IGenericResponse> => {
   const { id } = req.params;
-  const response: IGenericResponse = await CoreService.get(`/faculties/${id}`, {
+  const response: IGenericResponse = await CoreService.get(`/faculty/${id}`, {
     headers: {
       Authorization: req.headers.authorization,
     },
@@ -50,7 +50,7 @@ const getByIdFromDB = async (req: Request): Promise<IGenericResponse> => {
 
 const getFacultyProfile = async (req: Request): Promise<IGenericResponse> => {
   const { id } = req.params;
-  const response: IGenericResponse = await AuthService.get(`/faculties/${id}`, {
+  const response: IGenericResponse = await AuthService.get(`/faculty/${id}`, {
     headers: {
       Authorization: req.headers.authorization,
     },
@@ -61,7 +61,7 @@ const getFacultyProfile = async (req: Request): Promise<IGenericResponse> => {
 const updateOneInDB = async (req: Request): Promise<IGenericResponse> => {
   const { id } = req.params;
   const response: IGenericResponse = await AuthService.patch(
-    `/faculties/${id}`,
+    `/faculty/${id}`,
     req.body,
     {
       headers: {
@@ -75,7 +75,7 @@ const updateOneInDB = async (req: Request): Promise<IGenericResponse> => {
 const deleteByIdFromDB = async (req: Request): Promise<IGenericResponse> => {
   const { id } = req.params;
   const response: IGenericResponse = await AuthService.delete(
-    `/faculties/${id}`,
+    `/faculty/${id}`,
     {
       headers: {
         Authorization: req.headers.authorization,
