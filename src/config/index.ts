@@ -10,6 +10,7 @@ const envVarsZodSchema = z.object({
     .string()
     .default("5000")
     .refine((val) => Number(val)),
+  CORS_ORIGIN: z.string(),
   JWT_SECRET: z.string(),
   REDIS_URL: z.string(),
   AUTH_SERVICE_URL: z.string(),
@@ -24,6 +25,7 @@ const envVars = envVarsZodSchema.parse(process.env);
 export default {
   env: envVars.NODE_ENV || "development",
   port: envVars.PORT || 5000,
+  corsOrigin: envVars.CORS_ORIGIN,
   jwt: {
     secret: envVars.JWT_SECRET,
   },

@@ -9,7 +9,12 @@ import config from "./config";
 
 const app: Application = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: config.corsOrigin,
+    credentials: true,
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
