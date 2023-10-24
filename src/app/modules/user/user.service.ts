@@ -1,8 +1,8 @@
 import { Request } from "express";
 import { FileUploadHelper } from "../../../helpers/FileUploadHelper";
-import { ICloudinaryResponse, IUploadFile } from "../../../interfaces/file";
-import { AuthService } from "../../../shared/axios";
 import { IGenericResponse } from "../../../interfaces/common";
+import { IUploadFile } from "../../../interfaces/file";
+import { AuthService } from "../../../shared/axios";
 
 const createStudent = async (req: Request) => {
   const file = req.file as IUploadFile;
@@ -23,7 +23,8 @@ const createStudent = async (req: Request) => {
     academicDepartmentResponse.data &&
     Array.isArray(academicDepartmentResponse.data)
   ) {
-    req.body.student.academicDepartment = academicDepartmentResponse.data[0].id;
+    req.body.student.academicDepartment =
+      academicDepartmentResponse.data[0]._id;
   }
 
   const academicFacultyResponse = await AuthService.get(
@@ -34,7 +35,7 @@ const createStudent = async (req: Request) => {
     academicFacultyResponse.data &&
     Array.isArray(academicFacultyResponse.data)
   ) {
-    req.body.student.academicFaculty = academicFacultyResponse.data[0].id;
+    req.body.student.academicFaculty = academicFacultyResponse.data[0]._id;
   }
 
   const academicSemesterResponse = await AuthService.get(
@@ -45,7 +46,7 @@ const createStudent = async (req: Request) => {
     academicSemesterResponse.data &&
     Array.isArray(academicSemesterResponse.data)
   ) {
-    req.body.student.academicSemester = academicSemesterResponse.data[0].id;
+    req.body.student.academicSemester = academicSemesterResponse.data[0]._id;
   }
 
   const response: IGenericResponse = await AuthService.post(
@@ -80,19 +81,21 @@ const createFaculty = async (req: Request): Promise<IGenericResponse> => {
     academicDepartmentResponse.data &&
     Array.isArray(academicDepartmentResponse.data)
   ) {
-    req.body.faculty.academicDepartment = academicDepartmentResponse.data[0].id;
+    req.body.faculty.academicDepartment =
+      academicDepartmentResponse.data[0]._id;
   }
 
   const academicFacultyResponse: IGenericResponse = await AuthService.get(
     `/academic-faculty?syncId=${academicFaculty}`
   );
-
   if (
     academicFacultyResponse.data &&
     Array.isArray(academicFacultyResponse.data)
   ) {
-    req.body.faculty.academicFaculty = academicFacultyResponse.data[0].id;
+    req.body.faculty.academicFaculty = academicFacultyResponse.data[0]._id;
   }
+  console.log(academicFacultyResponse);
+  console.log(academicDepartmentResponse);
 
   const response: IGenericResponse = await AuthService.post(
     "/users/create-faculty",
@@ -103,6 +106,7 @@ const createFaculty = async (req: Request): Promise<IGenericResponse> => {
       },
     }
   );
+
   return response;
 };
 

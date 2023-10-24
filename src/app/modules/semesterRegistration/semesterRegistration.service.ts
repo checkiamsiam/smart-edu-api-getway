@@ -149,7 +149,7 @@ const confirmRegistration = async (req: Request): Promise<IGenericResponse> => {
 const startNewSemester = async (req: Request): Promise<IGenericResponse> => {
   const { id } = req.params;
   const response: IGenericResponse = await CoreService.post(
-    `/semester-registration/${id}/start-new-semester`,
+    `/semester-registration/start-new-semester/${id}`,
     req.body,
     {
       headers: {
