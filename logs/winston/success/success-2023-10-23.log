@@ -4,3 +4,5 @@
 {"level":"info","message":"Server running on port 5000","timestamp":"2023-10-23T04:56:51.493Z"}
 {"level":"info","message":"Redis connected","timestamp":"2023-10-23T04:56:58.110Z"}
 {"level":"info","message":"Server running on port 5000","timestamp":"2023-10-23T04:56:58.122Z"}
+{"level":"info","message":"Redis connected","timestamp":"2023-10-23T16:27:41.104Z"}
+{"level":"info","message":"Server running on port 5000","timestamp":"2023-10-23T16:27:41.112Z"}
